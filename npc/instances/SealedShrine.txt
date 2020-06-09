@@ -32,7 +32,7 @@
 //================= Description ===========================================
 //= Seal away the Great Demon Baphomet.
 //================= Current Version =======================================
-//= 2.3
+//= 2.4
 //=========================================================================
 
 //== Sealed Catacomb Entrance ==============================
@@ -228,7 +228,7 @@ monk_test,306,151,3	script	Grave of Baphomet#edq	HIDDEN_NPC,{
 			mes("It's cold to the touch. It doesn't respond.");
 			close();
 		} else {
-			mapannounce("monk_test", sprintf(_$("[%s] member of the [%s] party has entered the Sealed Shrine."), strcharinfo(PC_NAME), getpartyname(.@party_id)), bc_map, C_SPRINGGREEN);
+			mapannounce("monk_test", sprintf(_$("[%s] member of the [%s] party has entered the Sealed Shrine."), strcharinfo(PC_NAME), getpartyname(getcharid(CHAR_ID_PARTY))), bc_map, C_SPRINGGREEN);
 			setquest(3040);
 			warp("1@cata", 100, 224);
 			end;
@@ -429,7 +429,7 @@ OnInstanceInit:
 	// Pick one "true" Gravestone and 12 "false" Gravestones.
 	.@true = rand(1, 13);
 	for (.@i = 1; .@i <= 13; ++.@i)
-		disablenpc(instance_npcname("Gravestone#1F_"+.@i+((.@i == .@true)?"T":"F")));
+		disablenpc(instance_npcname("Gravestone#1F_"+.@i+((.@i == .@true)?"F":"T")));
 	disablenpc(instance_npcname("ins_baphomet_lotto"));
 	end;
 }
@@ -476,7 +476,6 @@ OnMyMobDead:
 
 //== Soul of hero near the north grave =====================
 1@cata,141,221,0	script	Gravestone#	CLEAR_NPC,3,3,{
-	.@party_id = getcharid(CHAR_ID_PARTY);
 	if ('ins_baphomet == 0) {
 		mes("The gravestone is trembling...");
 		next();
@@ -531,7 +530,7 @@ OnMyMobDead:
 		mes("[Voice of the Gravestone]");
 		mes("If your ^0000FFparty leader^000000 brings me the pendant, my soul can be substantialized. So, hurry up.");
 		close();
-	} else if ('ins_baphomet == 2 && getpartyleader(.@party_id, 2) == getcharid(CHAR_ID_CHAR)) {
+	} else if ('ins_baphomet == 2 && getpartyleader(getcharid(CHAR_ID_PARTY), 2) == getcharid(CHAR_ID_CHAR)) {
 		mes("[Voice of the Gravestone]");
 		mes("Did you find the pendant?");
 		next();
@@ -601,6 +600,8 @@ OnInstanceInit: // Temporary fix for @reloadscript.
 				++.@ins_baphomet_1f_1;
 				mes("[Ancient Hero's Soul]");
 				mes("You can see the torches here and there. These torches are the essence of Thor, the god of Thunder. They are inherited from our predecessors to stop the darkness of Baphomet...");
+				// Call Function to show torches viewpoints [Zopokx]
+				callfunc("ShowTorchesViewpoints", .@party_id);
 				next();
 				mes("[Ancient Hero's Soul]");
 				mes("To open the sealed underground gate, I must be purified by the ^0000FFEssence of Fire^000000 which has the power of Thor. Collect ^0000FF10 Essence of Fire^000000 from the torches.");
@@ -857,8 +858,7 @@ OnInstanceInit:
 
 //== Bobbing Torches =======================================
 -	script	Bobbing Torch#SS	FAKE_NPC,{
-	.@party_id = getcharid(CHAR_ID_PARTY);
-	if (getpartyleader(.@party_id, 2) == getcharid(CHAR_ID_CHAR)) {
+	if (getpartyleader(getcharid(CHAR_ID_PARTY), 2) == getcharid(CHAR_ID_CHAR)) {
 		if ('ins_baphomet == 3 && countitem(Essence_Of_Fire) < 11) {
 			mes("A huge torch appearing as if it can burn everything is bobbing up and down in front of me.");
 			next();
@@ -903,6 +903,34 @@ OnInstanceInit:
 1@cata,239,56,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#10	CLEAR_NPC
 1@cata,71,42,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#11	CLEAR_NPC
 1@cata,155,14,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#12	CLEAR_NPC
+
+// Show -temporal- torches viewpoints to all party members [Zopokx]
+function	script	ShowTorchesViewpoints	{
+	getpartymember(getarg(0), 2);
+	.@acc_id = getcharid(CHAR_ID_ACCOUNT);
+	for(.@i = 0; .@i<$@partymembercount; ++.@i) {
+		if (attachrid($@partymemberaid[.@i])) {
+			if (strcharinfo(PC_MAP) == "1@cata") {
+				viewpoint(0, 267, 210, 1, 0xF62817);
+				viewpoint(0, 85,  182, 2, 0xF62817);
+				viewpoint(0, 267, 154, 3, 0xF62817);
+				viewpoint(0, 157, 139, 4, 0xF62817);
+				viewpoint(0, 193, 138, 5, 0xF62817);
+				viewpoint(0, 193, 102, 6, 0xF62817);
+				viewpoint(0, 157, 102, 7, 0xF62817);
+				viewpoint(0, 113, 112, 8, 0xF62817);
+				viewpoint(0, 253,  56, 9, 0xF62817);
+				viewpoint(0, 239,  56,10, 0xF62817);
+				viewpoint(0, 71,   42,11, 0xF62817);
+				viewpoint(0, 155,  14,12, 0xF62817);
+			}
+			detachrid();
+		}
+	}
+	attachrid(.@acc_id);
+	return;
+}
+//=========================================================
 
 1@cata,1,1,0	script	ins_baphomet_1f_timer	FAKE_NPC,{
 OnInstanceInit:
@@ -1100,8 +1128,7 @@ OnInstanceInit:
 2@cata,35,109,0	duplicate(Magical Seal#SS)	Magical Seal#10	CLEAR_NPC
 
 2@cata,79,65,0	script	The Main Altar#ss	CLEAR_NPC,{
-	.@party_id = getcharid(CHAR_ID_PARTY);
-	if ('ins_baphomet == 5 && getpartyleader(.@party_id, 2) == getcharid(CHAR_ID_CHAR)) {
+	if ('ins_baphomet == 5 && getpartyleader(getcharid(CHAR_ID_PARTY), 2) == getcharid(CHAR_ID_CHAR)) {
 		mes("An evil power, too terrible to describe, lies under the great altar radiating a violet color.");
 		next();
 		mes("Complicated Magical Rune letters blink rapidly, attempting to suppress the dreadful power within.");
