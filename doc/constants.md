@@ -18191,6 +18191,7 @@
 - `Assassin_Shoes`: 22016
 - `Shoes_Of_Wise_Man`: 22018
 - `Immuned_Boots`: 22019
+- `Insect_Collector_Shoes`: 22031
 - `Exorcist_Shoes`: 22032
 - `Boots_Of_Gray`: 22033
 - `Crimson_Gaiter`: 22034
@@ -18207,7 +18208,7 @@
 - `Beach_Sandals`: 22045
 - `Airship_Boots`: 22046
 - `Felock_Boots`: 22047
-- `Sombre Shoes`: 22048
+- `Sombre_Shoes`: 22048
 - `Sol_Shoes`: 22049
 - `Gardener_Shoes`: 22050
 - `Amour_Shoes`: 22051
@@ -18221,7 +18222,7 @@
 - `Aegir_Shoes`: 22059
 - `Hunters_Shoes`: 22060
 - `Lumiere_Shoes`: 22061
-- `Astonomer_Shoes`: 22062
+- `Astronomer_Shoes`: 22062
 - `Levain_Shoes`: 22063
 - `Thorn_Shoes`: 22064
 - `Power_Shoes`: 22065
@@ -18251,8 +18252,8 @@
 - `Crimson_Gaiter_`: 22089
 - `Assassin_Shoes_`: 22090
 - `Fisherman_Shoes_`: 22091
-- `Insect_Collector_Shoes`: 22092
-- `Demon_Shoes_`: 22093
+- `Insect_Collector_Shoes_`: 22092
+- `Exorcist_Shoes_`: 22093
 - `Gardener_Shoes_`: 22094
 - `Grave_Keeper_Shoes_`: 22095
 - `Fallen_Angel_Shoes_`: 22096
@@ -18265,7 +18266,7 @@
 - `Excelion_Legs`: 22103
 - `Pororoca_Shoes`: 22104
 - `Foot_Chain`: 22105
-- `Gigant_Boots`: 22106
+- `Giant_Boots`: 22106
 - `Modified_STR_Boots`: 22107
 - `Modified_INT_Boots`: 22108
 - `Modified_AGI_Boots`: 22109
@@ -18295,10 +18296,18 @@
 - `Demonist_Shoes`: 22138
 - `Elvira_Boots`: 22140
 - `YSF01_Greave`: 22141
-- `True_Hunting_Boots`: 22168
+- `ShoesOfGuardsman`: 22142
+- `YSF01_Greave_`: 22143
+- `TenguShoes`: 22145
+- `R_Hunting_Boots_`: 22168
 - `R_Hunting_Boots`: 22169
-- `ShoesOfGuardsman`: 22171
+- `Shoes_Of_Survival`: 22170
+- `ShoesOfGuardsman_`: 22171
+- `Gray_Wing_Boots`: 22172
 - `Rebeginer_Boots`: 22173
+- `Scaraba_High_Heels`: 22174
+- `Anony_Sm_Shoes`: 22178
+- `Shoes_Of_Pilgrim`: 22189
 - `Boots_IL`: 22190
 - `Goibne_Boots_IL`: 22192
 - `Illusion_Leg_A`: 22196
